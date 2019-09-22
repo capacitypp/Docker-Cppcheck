@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+	echo "$(basename $0) [options] <filepath>"
+	exit 1
+fi
+mount_path=$(pwd)/$(dirname ${@:$#})
+arguments=${@:1:$#-1}
+file=$(basename ${@:$#})
+docker run --rm -v $mount_path:/root/work/input -it cppcheck cppcheck $arguments input/$file
+
